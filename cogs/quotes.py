@@ -6,9 +6,9 @@ from discord.ext import commands
 QUOTE_CHANNEL_ID = int(os.getenv("QUOTE_CHANNEL_ID"))
 
 
-class Quotes(commands.Cog):
+class quotes(commands.Cog):
     def __init__(self, bot):
-        self.bot = bot
+        self.bot: commands.Bot = bot
 
     @app_commands.command(
         name="quote",
@@ -77,5 +77,5 @@ class Quotes(commands.Cog):
         await interaction.response.send_message(reply_text, ephemeral=True)
 
 
-async def setup(bot):
-    await bot.add_cog(Quotes(bot))
+async def setup(bot: commands.Bot):
+    await bot.add_cog(quotes(bot))
