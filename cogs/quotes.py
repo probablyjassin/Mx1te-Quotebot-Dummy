@@ -31,7 +31,7 @@ class quotes(commands.Cog):
         for link in message_links:
             try:
                 parts = link.split("/")
-                guild_id, channel_id, message_id = (
+                _, channel_id, message_id = (
                     int(parts[-3]),
                     int(parts[-2]),
                     int(parts[-1]),
