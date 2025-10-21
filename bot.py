@@ -3,6 +3,7 @@ from discord.ext import commands
 import os
 from dotenv import load_dotenv
 import asyncio
+from dotenv import load_dotenv
 
 load_dotenv()
 
@@ -12,10 +13,13 @@ intents.message_content = True
 bot = commands.Bot(
     command_prefix=os.getenv("BOT_PREFIX"),
     intents=intents,
-    application_id=int(os.getenv("APPLICATION_ID"))  # int statt str
+    application_id=int(os.getenv("APPLICATION_ID")),  # int statt str
 )
 
-GUILD_ID = int(os.getenv("GUILD_ID"))  # Server für schnelle Slash Command-Synchronisation
+GUILD_ID = int(
+    os.getenv("GUILD_ID")
+)  # Server für schnelle Slash Command-Synchronisation
+
 
 # ------------------ Events ------------------
 @bot.event
@@ -27,6 +31,7 @@ async def on_ready():
     synced = await bot.tree.sync(guild=guild)
     print(f"🔄 {len(synced)} Slash Commands synchronisiert")
 
+
 # ------------------ Cogs laden ------------------
 async def load_cogs():
     for filename in os.listdir("./cogs"):
@@ -36,6 +41,7 @@ async def load_cogs():
                 print(f"✅ Cog geladen: {filename}")
             except Exception as e:
                 print(f"❌ Fehler beim Laden von {filename}: {e}")
+
 
 # ------------------ Admin-Befehle ------------------
 @bot.command()
@@ -64,12 +70,13 @@ async def reload(ctx, extension: str = None):
     synced = await bot.tree.sync(guild=guild)
     await ctx.send(f"🔄 {len(synced)} Slash Commands synchronisiert.")
 
+
 # ------------------ Bot starten ------------------
 async def main():
     async with bot:
         await load_cogs()
         await bot.start(os.getenv("DISCORD_TOKEN"))
 
+
 if __name__ == "__main__":
     asyncio.run(main())
-
